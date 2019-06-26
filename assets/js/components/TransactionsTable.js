@@ -1,12 +1,10 @@
 import React from 'react'
-import _ from 'lodash';
-import { compose } from 'redux';
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 import { Button, Icon, Table } from "semantic-ui-react";
 
-import DeleteTransactionDialog from '../components/DeleteTransactionDialog';
 import { deleteTransaction } from '../data/actions/transactionsActions';
+import DeleteTransactionDialog from '../components/DeleteTransactionDialog';
 
 class TransactionsTable extends React.Component {
   constructor(props){
@@ -30,6 +28,9 @@ class TransactionsTable extends React.Component {
   dataHasLoaded = () => this.props.transactions.transactions.length > 0;
 
   render() {
+    const { getAmount, transactions } =this.props;
+    const { deleteTransactionDialogOpen, deleteId } = this.state;
+
     return (
       <div>
         {this.dataHasLoaded() ? (
@@ -45,13 +46,13 @@ class TransactionsTable extends React.Component {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {this.props.transactions.transactions.map(transaction => {
+              {transactions.transactions.map(transaction => {
                 return (
                   <Table.Row key={transaction.id}>
                     <Table.Cell width="3">{transaction.category}</Table.Cell>
                     <Table.Cell>{transaction.name}</Table.Cell>
                     <Table.Cell> {transaction.merchant} </Table.Cell>
-                    <Table.Cell>{this.props.getAmount(transaction.amount)}</Table.Cell>
+                    <Table.Cell>{getAmount(transaction.amount)}</Table.Cell>
                     <Table.Cell>{transaction.description}</Table.Cell>
                     <Table.Cell collapsing>
                       <Button 
@@ -74,10 +75,10 @@ class TransactionsTable extends React.Component {
           </div>
         )}
         <DeleteTransactionDialog 
-          open={this.state.deleteTransactionDialogOpen}
+          open={deleteTransactionDialogOpen}
           alertTitle={"Delete Transaction"}
           alertDescription={"Are you sure? This will delete your transaction."}
-          confirm={() => this.handleDelete(this.state.deleteId)} 
+          confirm={() => this.handleDelete(deleteId)} 
           closeDialog={this.handleDeleteDialog} 
         />
       </div>
@@ -85,11 +86,11 @@ class TransactionsTable extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   deleteTransaction: id => dispatch(deleteTransaction(id))
 });
 
@@ -100,5 +101,5 @@ TransactionsTable.propTypes = {
   transactions: PropTypes.object,
 };
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(TransactionsTable);
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsTable);
 

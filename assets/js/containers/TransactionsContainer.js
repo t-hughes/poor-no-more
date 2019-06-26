@@ -1,6 +1,4 @@
 import React from 'react';
-import axios from 'axios';
-import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { Segment, Checkbox, Container, Header, Grid } from "semantic-ui-react";
@@ -46,15 +44,18 @@ class TransactionsContainer extends React.Component {
     this.resetForm();
   };
 
-  handleChange = (name) => (event) => {
-    this.setState({ form: { ...this.state.form, [name]: event.target.value } });
+  handleChange = (event) => {
+    if (event.target.name === undefined) {
+      throw new Error('Form inputs must have a name!');
+    }
+    this.setState({ form: { ...this.state.form, [event.target.name]: event.target.value } });
   };
 
-  handleBlur = (name) => (event) => {
-    if (name == "amount") {
+  handleBlur = (event) => {
+    if (event.target.name == "amount") {
       event.target.value = parseFloat(event.target.value).toFixed(2);
     }
-    this.setState({ form: { ...this.state.form, [name]: event.target.value } });
+    this.setState({ form: { ...this.state.form, [event.target.name]: event.target.value } });
   };
 
   toggleRomanNumerals = () => {
@@ -64,15 +65,19 @@ class TransactionsContainer extends React.Component {
   getAmount = (amount) => this.state.isAmountRoman ? convertAmountToRomanNumeral(amount) : amount;
 
   render() {
+    const { form, isAmountRoman } = this.state;
+
     return (
       <Container>
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column width={3}>
-              <Header as="h2" textAlign="center"> Add Transaction </Header>
+              <Header as="h2" textAlign="center">
+                Add Transaction
+              </Header>
               <Segment color="violet" raised style={{maxHeight: '530px' }}>
                 <AddTransactionForm
-                  form={this.state.form}
+                  form={form}
                   resetForm={this.resetForm}
                   addTransaction={this.addTransaction}
                   handleChange={this.handleChange}
@@ -84,7 +89,7 @@ class TransactionsContainer extends React.Component {
               <Checkbox label="Roman Numerals" toggle onChange={this.toggleRomanNumerals}/>
               <Segment raised color="violet" style={{ overflow: 'auto', maxHeight: '530px' }}>
                 <TransactionsTable
-                  isAmountRoman={this.state.isAmountRoman}
+                  isAmountRoman={isAmountRoman}
                   getAmount={this.getAmount}
                 />
               </Segment>
@@ -108,4 +113,4 @@ const mapDispatchToProps = (dispatch) => ({
   createTransaction: payload => dispatch(createTransaction(payload))
 });
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(TransactionsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsContainer);

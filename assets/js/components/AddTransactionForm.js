@@ -10,40 +10,45 @@ class AddTransactionForm extends React.Component {
       <Form onSubmit={addTransaction}>
         <Form.Field
           control={Input}
+          name="category"
           label="Category"
           value={form.category}
           placeholder="Category"
-          onChange={handleChange('category')}
+          onChange={handleChange}
         />
         <Form.Field
           control={Input}
+          name="name"
           label="Name"
           value={form.name}
           placeholder='Transaction Name'
-          onChange={handleChange('name')}
+          onChange={handleChange}
         />
         <Form.Field
           control={Input}
+          name="amount"
           label="Amount"
           value={form.amount}
           type="number"
           placeholder='Amount'
-          onChange={handleChange('amount')}
-          onBlur={handleBlur('amount')}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
         <Form.Field
           control={Input}
+          name="merchant"
           label="Merchant"
           value={form.merchant}
           placeholder='Merchant'
-          onChange={handleChange('merchant')}
+          onChange={handleChange}
         />
         <Form.Field
           control={Input}
+          name="description"
           label="Description"
           value={form.description}
           placeholder='Description'
-          onChange={handleChange('description')}
+          onChange={handleChange}
         />
         <Form.Field
           control={Button}
