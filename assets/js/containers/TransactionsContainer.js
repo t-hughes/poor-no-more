@@ -5,18 +5,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { Segment, Checkbox, Container, Header, Grid } from "semantic-ui-react";
 
+import store from '../data/reduxStore';
 import { convertAmountToRomanNumeral } from '../utils'
 import AddTransactionForm from '../components/AddTransactionForm';
 import TransactionsTable from '../components/TransactionsTable';
-import { createTransaction } from '../data/actions/transactionsActions';
-
-const newForm = {
-  name: '',
-  category: '',
-  merchant: '',
-  amount: '',
-  description: ''
-};
+import { getTransactions, createTransaction } from '../data/actions/transactionsActions';
 
 class TransactionsContainer extends React.Component {
   constructor(props){
@@ -24,7 +17,6 @@ class TransactionsContainer extends React.Component {
 
     this.state = {
       form: {},
-      amountIsRoman: false,
       deleteId: 0,
       deleteTransactionDialogOpen: false,
       isAmountRoman: false,
@@ -32,19 +24,19 @@ class TransactionsContainer extends React.Component {
   };
 
   componentDidMount() {
-    return axios.get('http://localhost:4000/api/transactions')
-      .then(function (response) {
-        console.log(response);
-        return response;
-      })
-      .catch(function (error) {
-        console.log(error);
-        return error;
-      });
+    store.dispatch(getTransactions());
   }
 
   resetForm() {
-    this.setState({ form: newForm });
+    this.setState({
+      form: {
+        name: '',
+        category: '',
+        merchant: '',
+        amount: '',
+        description: ''
+      }
+    });
   };
 
   addTransaction = () => {

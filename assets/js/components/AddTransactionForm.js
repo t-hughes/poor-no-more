@@ -45,24 +45,15 @@ class AddTransactionForm extends React.Component {
           placeholder='Description'
           onChange={handleChange('description')}
         />
-        <Form.Group widths="equal">
-          <Form.Field
-            control={Button}
-            color="violet"
-            type="submit"
-            inverted
-          >
-            Add
-          </Form.Field>
-          <Form.Field
-            control={Button}
-            color="red"
-            inverted
-            onClick={resetForm}
-          >
-            Clear
-          </Form.Field>
-        </Form.Group>
+        <Form.Field
+          control={Button}
+          color="violet"
+          type="submit"
+          inverted
+          style={{ width: '100%' }}
+        >
+          Add
+        </Form.Field>
       </Form>
     );
   }

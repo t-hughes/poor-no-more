@@ -14,10 +14,9 @@ export function convertAmountToRomanNumeral(amount) {
     IV: 4,
     I: 1
   };
-  let roman = '',
-  i;
+  let roman = '';
 
-  for ( i in romanNumeralVals ) {
+  for (let i in romanNumeralVals ) {
     while ( amount >= romanNumeralVals[i] ) {
       roman += i;
       amount -= romanNumeralVals[i];
