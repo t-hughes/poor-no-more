@@ -18,6 +18,12 @@ export const PageHeader = styled.div({
     borderRadius: '5px',
   },
 
+  '.dashboard-header-line': {
+    border: '2px solid #00cfbb',
+    width: '30%',
+    borderRadius: '5px',
+  },
+
   '.landing-sub-header': {
     paddingBottom: '20px',
   },

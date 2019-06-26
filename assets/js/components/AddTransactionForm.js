@@ -51,7 +51,6 @@ class AddTransactionForm extends React.Component {
             color="violet"
             type="submit"
             inverted
-            fluid
           >
             Add
           </Form.Field>
@@ -59,7 +58,6 @@ class AddTransactionForm extends React.Component {
             control={Button}
             color="red"
             inverted
-            fluid
             onClick={resetForm}
           >
             Clear

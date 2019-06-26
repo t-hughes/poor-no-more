@@ -78,7 +78,7 @@ class TransactionsContainer extends React.Component {
           <Grid.Row columns={2}>
             <Grid.Column width={3}>
               <Header as="h2" textAlign="center"> Add Transaction </Header>
-              <Segment color="teal" raised style={{maxHeight: '530px' }}>
+              <Segment color="violet" raised style={{maxHeight: '530px' }}>
                 <AddTransactionForm
                   form={this.state.form}
                   resetForm={this.resetForm}
@@ -90,7 +90,7 @@ class TransactionsContainer extends React.Component {
             </Grid.Column>
             <Grid.Column width={9}>
               <Checkbox label="Roman Numerals" toggle onChange={this.toggleRomanNumerals}/>
-              <Segment raised color="teal" style={{ overflow: 'auto', maxHeight: '530px' }}>
+              <Segment raised color="violet" style={{ overflow: 'auto', maxHeight: '530px' }}>
                 <TransactionsTable
                   isAmountRoman={this.state.isAmountRoman}
                   getAmount={this.getAmount}

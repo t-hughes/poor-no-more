@@ -9,6 +9,7 @@ class Dashboard extends React.Component {
       <React.Fragment>
         <PageHeader>
           <h1 className="dashboard-header">Budget Dashboard</h1>
+          <div className="dashboard-header-line" />
         </PageHeader>
         <TransactionsContainer />
       </React.Fragment>

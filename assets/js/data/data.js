@@ -13,7 +13,6 @@ const data = {
       });
   },
   createTransaction: (payload) => {
-    console.log('YO', payload)
     return axios.post('http://localhost:4000/api/transactions', payload)
       .then(function (response) {
         console.log(response);
