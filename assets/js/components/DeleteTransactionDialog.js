@@ -3,27 +3,27 @@ import PropTypes from 'prop-types';
 import { Button, Modal } from 'semantic-ui-react';
 
 class DeleteTransactionDialog extends React.Component {
-  cancel = () => {
+  handleCancel = () => {
     this.props.closeDialog();
   };
 
-  confirm = () => {
+  handleConfirm = () => {
     this.props.closeDialog();
-    this.props.confirm();
+    this.props.onConfirm();
   };
 
   render() {
-    const { alertDescription, alertTitle, close, open } = this.props;
+    const { alertDescription, alertTitle, openDialog } = this.props;
     
     return (
-      <Modal size="mini" open={open} onClose={this.cancel}>
+      <Modal size="mini" open={openDialog} onClose={this.handleCancel}>
         <Modal.Header>{alertTitle}</Modal.Header>
         <Modal.Content>
           <p>{alertDescription}</p>
         </Modal.Content>
         <Modal.Actions>
-          <Button onClick={this.cancel} negative>No</Button>
-          <Button onClick={this.confirm} positive>Yes</Button>
+          <Button onClick={this.handleCancel} negative>No</Button>
+          <Button onClick={this.handleConfirm} positive>Yes</Button>
         </Modal.Actions>
       </Modal>
     );
@@ -33,7 +33,7 @@ class DeleteTransactionDialog extends React.Component {
 DeleteTransactionDialog.propTypes = {
   alertDescription: PropTypes.string,
   alertTitle: PropTypes.string,
-  open: PropTypes.func,
+  openDialog: PropTypes.bool,
 };
 
 export default DeleteTransactionDialog;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { every } from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { Segment, Checkbox, Container, Header, Grid } from "semantic-ui-react";
@@ -14,7 +15,13 @@ class TransactionsContainer extends React.Component {
     super(props);
 
     this.state = {
-      form: {},
+      createTransactionForm: {
+        name: '',
+        category: '',
+        description: '',
+        amount: '',
+        merchant: '',
+      },
       deleteId: 0,
       deleteTransactionDialogOpen: false,
       isAmountRoman: false,
@@ -27,7 +34,7 @@ class TransactionsContainer extends React.Component {
 
   resetForm() {
     this.setState({
-      form: {
+      createTransactionForm: {
         name: '',
         category: '',
         merchant: '',
@@ -39,7 +46,7 @@ class TransactionsContainer extends React.Component {
 
   addTransaction = () => {
     this.props.createTransaction({
-      transaction: this.state.form
+      transaction: this.state.createTransactionForm
     });
     this.resetForm();
   };
@@ -48,14 +55,26 @@ class TransactionsContainer extends React.Component {
     if (event.target.name === undefined) {
       throw new Error('Form inputs must have a name!');
     }
-    this.setState({ form: { ...this.state.form, [event.target.name]: event.target.value } });
+
+    this.setState({
+      createTransactionForm: {
+        ...this.state.createTransactionForm,
+        [event.target.name]: event.target.value,
+      }
+    });
   };
 
   handleBlur = (event) => {
     if (event.target.name == "amount") {
       event.target.value = parseFloat(event.target.value).toFixed(2);
     }
-    this.setState({ form: { ...this.state.form, [event.target.name]: event.target.value } });
+
+    this.setState({
+      createTransactionForm: {
+        ...this.state.createTransactionForm,
+        [event.target.name]: event.target.value,
+      }
+    });
   };
 
   toggleRomanNumerals = () => {
@@ -65,7 +84,8 @@ class TransactionsContainer extends React.Component {
   getAmount = (amount) => this.state.isAmountRoman ? convertAmountToRomanNumeral(amount) : amount;
 
   render() {
-    const { form, isAmountRoman } = this.state;
+    const { createTransactionForm, isAmountRoman } = this.state;
+    const isFormEmpty = !every(createTransactionForm, val => Boolean(val.toString()));
 
     return (
       <Container>
@@ -77,11 +97,12 @@ class TransactionsContainer extends React.Component {
               </Header>
               <Segment color="violet" raised style={{maxHeight: '530px' }}>
                 <AddTransactionForm
-                  form={form}
+                  createTransactionForm={createTransactionForm}
                   resetForm={this.resetForm}
                   addTransaction={this.addTransaction}
                   handleChange={this.handleChange}
                   handleBlur={this.handleBlur}
+                  isFormEmpty={isFormEmpty}
                 />
               </Segment>
             </Grid.Column>

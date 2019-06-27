@@ -75,10 +75,10 @@ class TransactionsTable extends React.Component {
           </div>
         )}
         <DeleteTransactionDialog 
-          open={deleteTransactionDialogOpen}
+          openDialog={deleteTransactionDialogOpen}
           alertTitle={"Delete Transaction"}
           alertDescription={"Are you sure? This will delete your transaction."}
-          confirm={() => this.handleDelete(deleteId)} 
+          onConfirm={() => this.handleDelete(deleteId)} 
           closeDialog={this.handleDeleteDialog} 
         />
       </div>

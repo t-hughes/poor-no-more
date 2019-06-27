@@ -4,49 +4,60 @@ import { Form, Input, Button } from "semantic-ui-react";
 
 class AddTransactionForm extends React.Component {
   render() {
-    const { addTransaction, form, handleBlur, handleChange, resetForm } = this.props;
+    const {
+      addTransaction,
+      createTransactionForm,
+      handleBlur,
+      handleChange,
+      isFormEmpty,
+    } = this.props;
 
     return (
       <Form onSubmit={addTransaction}>
         <Form.Field
+          autoComplete="off"
           control={Input}
           name="category"
           label="Category"
-          value={form.category}
+          value={createTransactionForm.category}
           placeholder="Category"
           onChange={handleChange}
         />
         <Form.Field
+          autoComplete="off"
           control={Input}
           name="name"
           label="Name"
-          value={form.name}
+          value={createTransactionForm.name}
           placeholder='Transaction Name'
           onChange={handleChange}
         />
         <Form.Field
+          autoComplete="off"
           control={Input}
           name="amount"
           label="Amount"
-          value={form.amount}
+          value={createTransactionForm.amount}
           type="number"
           placeholder='Amount'
           onChange={handleChange}
           onBlur={handleBlur}
         />
         <Form.Field
+          autoComplete="off"
           control={Input}
           name="merchant"
           label="Merchant"
-          value={form.merchant}
+          value={createTransactionForm.merchant}
           placeholder='Merchant'
           onChange={handleChange}
         />
         <Form.Field
+          autoComplete="off"
           control={Input}
           name="description"
           label="Description"
-          value={form.description}
+          value={createTransactionForm.description}
           placeholder='Description'
           onChange={handleChange}
         />
@@ -56,6 +67,7 @@ class AddTransactionForm extends React.Component {
           type="submit"
           inverted
           style={{ width: '100%' }}
+          disabled={isFormEmpty}
         >
           Add
         </Form.Field>
@@ -66,9 +78,10 @@ class AddTransactionForm extends React.Component {
 
 AddTransactionForm.propTypes = {
   addTransaction: PropTypes.func,
-  form: PropTypes.object,
+  createTransactionForm: PropTypes.object,
   handleBlur: PropTypes.func,
   handleChange: PropTypes.func,
+  isFormEmpty: PropTypes.bool,
   resetForm: PropTypes.func,
 };
 
